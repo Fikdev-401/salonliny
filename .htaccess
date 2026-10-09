@@ -1,0 +1,19 @@
+# HTACCESS untuk Subdomain
+# Letakkan file ini di public_html/gasing.fun/.htaccess
+# Jika Hostinger tidak bisa set document root ke folder public
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redirect all requests to public folder
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+# Disable directory browsing
+Options -Indexes
+
+# Protect hidden files
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

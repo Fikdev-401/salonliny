@@ -1,0 +1,35 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('konfigurasis', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama_perusahaan')->default('Salon & Barber Shop');
+            $table->text('alamat')->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('email')->nullable();
+            $table->string('logo')->nullable();
+            $table->string('jam_buka')->nullable();
+            $table->string('jam_tutup')->nullable();
+            $table->decimal('pajak_persen', 5, 2)->default(0);
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('konfigurasis');
+    }
+};
