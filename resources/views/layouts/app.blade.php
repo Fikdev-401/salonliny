@@ -458,6 +458,14 @@
                 </a>
             </li>
             @endif
+
+            @if(auth()->user()->hasRole(['super-admin', 'admin']))
+            <li class="nav-item">
+                <a class="nav-link {{ request()->routeIs('landing-admin.*') ? 'active' : '' }}" href="{{ route('landing-admin.content') }}">
+                    <i class="bi bi-globe"></i> Landing Page
+                </a>
+            </li>
+            @endif
             
             @if(auth()->user()->hasRole('super-admin'))
             <li class="nav-item">

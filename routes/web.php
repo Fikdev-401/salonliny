@@ -19,6 +19,14 @@ use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\JenisProdukController;
 use App\Http\Controllers\UserManagementController;
 use App\Http\Controllers\AbsensiBarcodeController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\LandingContentController;
+use App\Http\Controllers\LandingGalleryController;
+use App\Http\Controllers\LandingVideoController;
+use App\Http\Controllers\LandingTestimoniController;
+
+// Public Landing Page
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 // Auth Routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -32,7 +40,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['password.changed'])->group(function () {
     // Dashboard
-    Route::get('/', fn () => redirect()->route('dashboard'));
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Pelanggan (Admin, Kasir)
@@ -144,6 +151,15 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/pengaturan', [PengaturanController::class, 'update'])->name('pengaturan.update');
         Route::put('/pengaturan/jenis-produk/{jenisProduk}', [JenisProdukController::class, 'update'])->name('pengaturan.jenis-produk.update');
         Route::resource('inventaris', InventarisController::class)->parameters(['inventaris' => 'inventaris']);
+
+        // Landing Page CMS
+        Route::prefix('pengaturan/landing')->name('landing-admin.')->group(function () {
+            Route::get('/', [LandingContentController::class, 'index'])->name('content');
+            Route::post('/', [LandingContentController::class, 'update'])->name('content.update');
+            Route::resource('gallery', LandingGalleryController::class)->except(['show'])->names('gallery');
+            Route::resource('videos', LandingVideoController::class)->except(['show'])->names('videos');
+            Route::resource('testimonis', LandingTestimoniController::class)->except(['show'])->names('testimonis');
+        });
     });
     
     // Cabang Management (Super Admin Only)

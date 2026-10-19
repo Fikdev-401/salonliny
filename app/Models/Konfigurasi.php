@@ -20,6 +20,20 @@ class Konfigurasi extends Model
         'jam_buka',
         'jam_tutup',
         'pajak_persen',
+        // CMS landing page
+        'hero_title',
+        'hero_subtitle',
+        'hero_image',
+        'hero_cta_message',
+        'about_title',
+        'about_text',
+        'about_image',
+        'whatsapp_number',
+        'instagram_url',
+        'tiktok_url',
+        'facebook_url',
+        'youtube_url',
+        'maps_embed_url',
     ];
 
     protected $casts = [
@@ -36,5 +50,21 @@ class Konfigurasi extends Model
             ]);
         }
         return $config;
+    }
+
+    public function getHeroImageUrlAttribute(): ?string
+    {
+        if (!$this->hero_image) {
+            return null;
+        }
+        return asset('storage/' . $this->hero_image);
+    }
+
+    public function getAboutImageUrlAttribute(): ?string
+    {
+        if (!$this->about_image) {
+            return null;
+        }
+        return asset('storage/' . $this->about_image);
     }
 }
